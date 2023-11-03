@@ -1,0 +1,37 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Ürün Ekle</h2>
+
+<div asp-validation-summary="All" class="text-danger small"></div>
+<form asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="form-label" asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" placeholder="Enter Name">
+        <span asp-validation-for="Name" class="text-danger small"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Price"></label>
+        <input class="form-control" asp-for="Price" placeholder="Price">
+        <span asp-validation-for="Price" class="text-danger small"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" asp-for="Image"></label>
+        <input type="file" name="imageFile" class="form-control">
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="CategoryId"></label>
+        <select class="form-select" asp-items="@ViewBag.Categorys">
+            <option value="0">Hepsi</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+    </div>
+    <div class="form-check mt-2">
+        <input asp-for="IsActve" class="form-check-input" id="IsActve">
+        <label asp-for="IsActve" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Ekle</button>
+</form>

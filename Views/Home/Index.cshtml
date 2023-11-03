@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Ürünler Listesi";
+}
+
+
+
+<div class="card card-body my3">
+    <form asp-action="Index" method="get">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11">
+                    <select name="category"  asp-items="@ViewBag.Categorys" class="form-select">
+                        <option value="0">Hepsi</option>
+                    </select>
+                </div>
+
+                <div class="col-md-1">
+                    <button class="btn btn-primary">
+                        Filtrele
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="text-center">
+        <tr>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.ProductId)</th>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.Image)</th>
+            <th>@Html.DisplayNameFor(m => m.Name)</th>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.Price)</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var prd in Model){
+            <tr><td>@prd.ProductId</td>
+            <td><img width="100px" src="~/img/@prd.Image" alt=""></td>
+            <td>@prd.Name</td>
+            <td>@prd.Price <b>₺</b></td>
+                <td class="text-center">
+                    <a href="/Home/Edit/@prd.ProductId" class="btn text-white bg-primary">Düzenle</a>
+                    <a onclick="deleteProduct(@prd.ProductId);" class="btn text-white bg-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<script>
+    function deleteProduct(id) {
+        Swal.fire({
+            title: 'Bilgilendirme',
+            text: "Ürünü Silmek istiyormusunuz ? ",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Home/Delete/'+id
+            }
+        })
+    }
+</script>
